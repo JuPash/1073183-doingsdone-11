@@ -128,16 +128,14 @@ $show_complete_tasks = rand(0, 1);
 
                 <table class="tasks">
                 <?php foreach ($work as $key => $val): ?>
-                    <tr class="tasks__item task
-                   
-                    "><?=$key;?>
+                <?php if ($show_complete_tasks == 0) 
+                        { continue; } ?>
+                    <tr class="tasks__item task">
+                    <?=$key;?>
                         <?php foreach ($val as $valkey => $valval): ?>
                         <td class="task__select 
-                        <?php if ($val["Выполнен"] == true) { echo "task--completed"; 
-                        } ?>
-                        <?php if ($show_complete_tasks == 0) {
-                            continue;
-                        }?>
+                        <?php if ($val["Выполнен"] == true)  
+                        { echo "task--completed"; } ?>
                         ">
                         <?=$valval; ?>
                         </td>
