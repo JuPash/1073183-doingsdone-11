@@ -1,6 +1,8 @@
+
 <?php
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
+$show_complete_tasks = 0;
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -35,44 +37,45 @@ $show_complete_tasks = rand(0, 1);
                 </div>
             </div>
         </header>
-        <?php $categories=["Работа", "Учеба", "Входящие", "Домашние дела"]; 
+
+        <?php $categories=["Работа", "Учеба", "Входящие", "Домашние дела", "Авто"]; 
         
         $work=[
         [
         'Задача'=>'Собеседование в IT',
         'Дата выполнения'=>'01.12.2019',
         'Категория'=>'Работа',
-        'Выполнен'=>'false'
+        'Выполнен'=>false 
         ],
         [
         'Задача'=>'Выполнить тестовое задание',
         'Дата выполнения'=>'25.12.2019',
         'Категория'=>'Работа',
-        'Выполнен'=>'false'
+        'Выполнен'=>false
         ],
         [
         'Задача'=>'Сделать задание первого раздела',
         'Дата выполнения'=>'21.12.2019',
         'Категория'=>'Учеба',
-        'Выполнен'=>'true'
+        'Выполнен'=>true
         ],
         [
         'Задача'=>'Встреча с другом',
         'Дата выполнения'=>'22.12.2019',
         'Категория'=>'Входящие',
-        'Выполнен'=>'false'
+        'Выполнен'=>false
         ],
         [
         'Задача'=>'Купить корм для кота',
         'Дата выполнения'=>'null',
         'Категория'=>'Входящие',
-        'Выполнен'=>'false'
+        'Выполнен'=>false
         ],
         [
         'Задача'=>'Заказать пиццу',
         'Дата выполнения'=>'null',
         'Категория'=>'Входящие',
-        'Выполнен'=>'false'
+        'Выполнен'=>false
         ],
         ]
         ?>
@@ -127,22 +130,17 @@ $show_complete_tasks = rand(0, 1);
                 </div>
 
                 <table class="tasks">
-                <?php foreach ($work as $key => $val): ?>
-                <?php if ($show_complete_tasks == 0 && $val['Выполнен'] == true) 
-                        { continue; } ?>
-                    <tr class="tasks__item task">
-                    
-                        <?php foreach ($val as $valkey => $valval): ?>
-                        <td class="task__select
-                        <?php if ($val["Выполнен"] == true)
-                        {echo "task--completed"; } ?>
-                        "> 
-                        <?=$valval; ?>
-                        </td>
-                        <?php endforeach; ?>
-                        
-                    </tr>
-                    <?php endforeach; ?>
+<!-------------------------------------------------------------------------------------->
+                <?php 
+				foreach ($work as $item){ 
+					if (($show_complete_tasks == 0) && ($item["Выполнен"]))
+                        continue;
+                    echo '<tr class="tasks__item task">';
+				    if($item["Выполнен"]) 
+						echo '<td class="task--completed">' . $item["Задача"];
+					else
+						echo '<td class="task__select">' . $item["Задача"];
+				}?>
                 </table>
             </main>
         </div>
