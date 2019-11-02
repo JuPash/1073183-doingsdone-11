@@ -2,7 +2,6 @@
 <?php
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
-$show_complete_tasks = 0;
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -67,13 +66,13 @@ $show_complete_tasks = 0;
         ],
         [
         'Задача'=>'Купить корм для кота',
-        'Дата выполнения'=>'null',
+        'Дата выполнения'=>null,
         'Категория'=>'Входящие',
         'Выполнен'=>false
         ],
         [
         'Задача'=>'Заказать пиццу',
-        'Дата выполнения'=>'null',
+        'Дата выполнения'=>null,
         'Категория'=>'Входящие',
         'Выполнен'=>false
         ],
@@ -132,15 +131,27 @@ $show_complete_tasks = 0;
                 <table class="tasks">
 <!-------------------------------------------------------------------------------------->
                 <?php 
-				foreach ($work as $item){ 
-					if (($show_complete_tasks == 0) && ($item["Выполнен"]))
-                        continue;
-                    echo '<tr class="tasks__item task">';
-				    if($item["Выполнен"]) 
-						echo '<td class="task--completed">' . $item["Задача"];
-					else
-						echo '<td class="task__select">' . $item["Задача"];
-				}?>
+				foreach ($work as $item) { 
+          if ($show_complete_tasks == 0 && $item["Выполнен"]) {
+            continue;
+          }
+          
+          echo '<tr class="tasks__item task">';
+
+          if ($item["Выполнен"]) { 
+            echo '<td class="task--completed">' . $item["Задача"];
+          }
+					else { 
+            echo '<td class="task__select">' . $item["Задача"];
+          }
+          echo '</td>';
+          echo '<td>';
+          echo $item["Дата выполнения"]; 
+          echo '</td>';
+          echo '</tr>'; 
+        }
+        ?>
+                
                 </table>
             </main>
         </div>
