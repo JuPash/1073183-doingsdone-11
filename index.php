@@ -78,33 +78,44 @@ $show_complete_tasks = rand(0, 1);
         ],
         ]
         ?>
+         <?php 
+          function simbol ($category, $tasks)
+          { $count=0 ; 
+              foreach ($tasks as $task) {
+                if ($task ['Категория'] == $category)
+                $count++;
+              }
+            return $count;
+        } 
+        ?>
+        
         <div class="content">
             <section class="content__side">
                 <h2 class="content__side-heading">Проекты</h2>
 
                 <nav class="main-navigation">
-              
-                <?php foreach ($categories as $key => $val): ?>
-
+                    <?php foreach ($categories as $key => $val): ?>
                     <ul class="main-navigation__list">
                         <li class="main-navigation__list-item">
                             <a class="main-navigation__list-item-link" href="#"><?=$val;?></a>
-                            <span class="main-navigation__list-item-count">0</span>
+                            <span class="main-navigation__list-item-count">
+                            <?php print simbol( $val, $work); ?>
+                            </span>
                         </li>
                     </ul>
                     <?php endforeach; ?>
                 </nav>
 
-                <a class="button button--transparent button--plus content__side-button"
-                   href="pages/form-project.html" target="project_add">Добавить проект</a>
+                <a class="button button--transparent button--plus content__side-button" href="pages/form-project.html" target="project_add">Добавить проект</a>
             </section>
+           
+        
 
             <main class="content__main">
                 <h2 class="content__main-heading">Список задач</h2>
 
                 <form class="search-form" action="index.php" method="post" autocomplete="off">
                     <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
-
                     <input class="search-form__submit" type="submit" name="" value="Искать">
                 </form>
 
@@ -117,8 +128,6 @@ $show_complete_tasks = rand(0, 1);
                     </nav>
 
                     <label class="checkbox">
-                        <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
-                       
                         <input class="checkbox__input visually-hidden show_completed" type="checkbox"
                         <?php
                         if($show_complete_tasks==1){ print("checked");}
@@ -129,30 +138,29 @@ $show_complete_tasks = rand(0, 1);
                 </div>
 
                 <table class="tasks">
-<!-------------------------------------------------------------------------------------->
-                <?php 
-				foreach ($work as $item) { 
-          if ($show_complete_tasks == 0 && $item["Выполнен"]) {
-            continue;
-          }
-          
-          echo '<tr class="tasks__item task">';
+                    <?php 
+                    foreach ($work as $item) { 
+                        if ($show_complete_tasks == 0 && $item["Выполнен"]) {
+                            continue;
+                        }
+                        
+                        echo '<tr class="tasks__item task">';
 
-          if ($item["Выполнен"]) { 
-            echo '<td class="task--completed">' . $item["Задача"];
-          }
-					else { 
-            echo '<td class="task__select">' . $item["Задача"];
-          }
-          echo '</td>';
-          echo '<td>';
-          echo $item["Дата выполнения"]; 
-          echo '</td>';
-          echo '</tr>'; 
-        }
-        ?>
-                
+                        if ($item["Выполнен"]) { 
+                            echo '<td class="task--completed">' . $item["Задача"];
+                        }
+                                    else { 
+                            echo '<td class="task__select">' . $item["Задача"];
+                        }
+                        echo '</td>';
+                        echo '<td>';
+                        echo $item["Дата выполнения"]; 
+                        echo '</td>';
+                        echo '</tr>'; 
+                        }
+                    ?>
                 </table>
+                  
             </main>
         </div>
     </div>
@@ -221,3 +229,5 @@ $show_complete_tasks = rand(0, 1);
 <script src="script.js"></script>
 </body>
 </html>
+
+
