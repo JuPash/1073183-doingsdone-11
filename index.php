@@ -2,6 +2,58 @@
 <?php
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
+
+$categories = ["Работа", "Учеба", "Входящие", "Домашние дела", "Авто"]; 
+        
+$work = [
+    [
+        'task' => 'Собеседование в IT',
+        'date' => '01.12.2019',
+        'category' => 'Работа',
+        'finish'=>false, 
+    ],
+    [
+        'task' => 'Выполнить тестовое задание',
+        'date' => '25.12.2019',
+        'category' => 'Работа',
+        'finish' => false,
+    ],
+    [
+        'task' => 'Сделать задание первого раздела',
+        'date' => '21.12.2019',
+        'category' => 'Учеба',
+        'finish' => true,
+    ],
+    [
+        'task' => 'Встреча с другом',
+        'date' => '22.12.2019',
+        'category' => 'Входящие',
+        'finish' => false,
+    ],
+    [
+        'task' => 'Купить корм для кота',
+        'date' => null,
+        'category' => 'Входящие',
+        'finish' => false,
+    ],
+    [
+        'task' => 'Заказать пиццу',
+        'date' => null,
+        'category' => 'Входящие',
+        'finish' => false,
+    ],
+];
+
+function categoryTaskCount($category, $tasks)
+{ 
+    $count = 0;
+    foreach ($tasks as $task) {
+        if ($task ['category'] == $category) {
+            $count++; 
+        }
+    }
+    return $count;
+} 
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -37,57 +89,8 @@ $show_complete_tasks = rand(0, 1);
             </div>
         </header>
 
-        <?php $categories=["Работа", "Учеба", "Входящие", "Домашние дела", "Авто"]; 
+     
         
-        $work=[
-        [
-        'Задача'=>'Собеседование в IT',
-        'Дата выполнения'=>'01.12.2019',
-        'Категория'=>'Работа',
-        'Выполнен'=>false 
-        ],
-        [
-        'Задача'=>'Выполнить тестовое задание',
-        'Дата выполнения'=>'25.12.2019',
-        'Категория'=>'Работа',
-        'Выполнен'=>false
-        ],
-        [
-        'Задача'=>'Сделать задание первого раздела',
-        'Дата выполнения'=>'21.12.2019',
-        'Категория'=>'Учеба',
-        'Выполнен'=>true
-        ],
-        [
-        'Задача'=>'Встреча с другом',
-        'Дата выполнения'=>'22.12.2019',
-        'Категория'=>'Входящие',
-        'Выполнен'=>false
-        ],
-        [
-        'Задача'=>'Купить корм для кота',
-        'Дата выполнения'=>null,
-        'Категория'=>'Входящие',
-        'Выполнен'=>false
-        ],
-        [
-        'Задача'=>'Заказать пиццу',
-        'Дата выполнения'=>null,
-        'Категория'=>'Входящие',
-        'Выполнен'=>false
-        ],
-        ]
-        ?>
-         <?php 
-          function simbol ($category, $tasks)
-          { $count=0 ; 
-              foreach ($tasks as $task) {
-                if ($task ['Категория'] == $category)
-                $count++;
-              }
-            return $count;
-        } 
-        ?>
         
         <div class="content">
             <section class="content__side">
@@ -97,9 +100,9 @@ $show_complete_tasks = rand(0, 1);
                     <?php foreach ($categories as $key => $val): ?>
                     <ul class="main-navigation__list">
                         <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#"><?=$val;?></a>
+                            <a class="main-navigation__list-item-link" href="#"><?= $val; ?></a>
                             <span class="main-navigation__list-item-count">
-                            <?php print simbol( $val, $work); ?>
+                            <?= categoryTaskCount($val, $work); ?>
                             </span>
                         </li>
                     </ul>
@@ -130,7 +133,7 @@ $show_complete_tasks = rand(0, 1);
                     <label class="checkbox">
                         <input class="checkbox__input visually-hidden show_completed" type="checkbox"
                         <?php
-                        if($show_complete_tasks==1){ print("checked");}
+                            if ($show_complete_tasks == 1) { print("checked"); }
                         ?>
                         >
                         <span class="checkbox__text">Показывать выполненные</span>
@@ -138,27 +141,21 @@ $show_complete_tasks = rand(0, 1);
                 </div>
 
                 <table class="tasks">
-                    <?php 
-                    foreach ($work as $item) { 
-                        if ($show_complete_tasks == 0 && $item["Выполнен"]) {
+                    <?php foreach ($work as $item): ?>
+                        <?php if ($show_complete_tasks == 0 && $item['finish']) {
                             continue;
-                        }
+                        } ?>
                         
-                        echo '<tr class="tasks__item task">';
+                        <tr class="tasks__item task">
 
-                        if ($item["Выполнен"]) { 
-                            echo '<td class="task--completed">' . $item["Задача"];
-                        }
-                                    else { 
-                            echo '<td class="task__select">' . $item["Задача"];
-                        }
-                        echo '</td>';
-                        echo '<td>';
-                        echo $item["Дата выполнения"]; 
-                        echo '</td>';
-                        echo '</tr>'; 
-                        }
-                    ?>
+                        <?php if ($item['finish']): ?>
+                            <td class="task--completed"><?= $item['task']; ?></td>
+                        <?php else: ?>
+                            <td class="task__select"><?= $item['task']; ?></td>
+                        <?php endif; ?>
+                        <td><?= $item['date']; ?></td>
+                       </tr>
+                    <?php endforeach; ?>
                 </table>
                   
             </main>
