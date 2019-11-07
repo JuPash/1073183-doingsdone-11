@@ -16,8 +16,7 @@
 
                 <a class="button button--transparent button--plus content__side-button" href="pages/form-project.html" target="project_add">Добавить проект</a>
             </section>
-           
-        
+
 
             <main class="content__main">
                 <h2 class="content__main-heading">Список задач</h2>
@@ -50,7 +49,7 @@
                         <?php if ($show_complete_tasks == 0 && $item['finish']) {
                             continue;
                         } ?>
-                        
+
                         <tr class="tasks__item task">
 
                         <?php if ($item['finish']): ?>
@@ -62,5 +61,5 @@
                        </tr>
                     <?php endforeach; ?>
                 </table>
-                  
+
             </main>

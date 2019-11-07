@@ -4,9 +4,9 @@ $title = 'Дела в порядке';
 
 function include_template($path) {
     global $categories,$work,$show_complete_tasks;
-  ob_start();
-  include $path;
-  return ob_get_clean();
+    ob_start();
+    include $path;
+    return ob_get_clean();
 }
 
 $title = filterXSS($title);
