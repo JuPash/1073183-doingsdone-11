@@ -50,14 +50,24 @@
                             continue;
                         } ?>
 
-                        <tr class="tasks__item task">
-
-                        <?php if ($item['finish']): ?>
-                            <td class="task--completed"><?= filterXSS($item['task']); ?></td>
-                        <?php else: ?>
-                            <td class="task__select"><?= filterXSS($item['task']); ?></td>
-                        <?php endif; ?>
-                        <td><?= filterXSS($item['date']); ?></td>
+                        <tr class="<?php
+                            if (isUrgent($item['date'])) {
+                                print('task--important');
+                            }
+                        ?>
+                        tasks__item task">
+                        <td class="task__select <?php
+                            if ($item['finish']){
+                                print('task--completed');
+                            }
+                            ?>
+                            ">
+                            <label class="checkbox task__checkbox">
+                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
+                                <span class="checkbox__text"><?= filterXSS($item['task']); ?></span>
+                            </label>
+                        </td>
+                        <td class="task__date"><?= filterXSS($item['date']); ?></td>
                        </tr>
                     <?php endforeach; ?>
                 </table>
