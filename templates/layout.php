@@ -1,7 +1,5 @@
-
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <title><?= $title; ?></title>
@@ -9,33 +7,24 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flatpickr.min.css">
 </head>
-
 <body>
 <h1 class="visually-hidden">Дела в порядке</h1>
-
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
         <header class="main-header">
             <a href="/">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
-
             <div class="main-header__side">
                 <a class="main-header__side-item button button--plus open-modal" href="pages/form-task.html">Добавить задачу</a>
-
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__data">
                         <p>Константин</p>
-
                         <a href="#">Выйти</a>
                     </div>
                 </div>
             </div>
         </header>
-
-     
-        
-        
         <div class="content">
            <?= $content; ?>
         </div>
@@ -90,7 +79,6 @@
                 </svg>
             </a>
         </div>
-
         <div class="main-footer__developed-by">
             <span class="visually-hidden">Разработано:</span>
 

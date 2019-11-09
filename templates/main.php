@@ -5,7 +5,7 @@
                     <?php foreach ($categories as $key => $val): ?>
                     <ul class="main-navigation__list">
                         <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#"><?= $val; ?></a>
+                            <a class="main-navigation__list-item-link" href="#"><?= filterXSS($val); ?></a>
                             <span class="main-navigation__list-item-count">
                             <?= categoryTaskCount($val, $work); ?>
                             </span>
@@ -37,7 +37,7 @@
                     <label class="checkbox">
                         <input class="checkbox__input visually-hidden show_completed" type="checkbox"
                         <?php
-                            if ($show_complete_tasks == 1) { print("checked"); }
+                            if ($showCompleteTasks == 1) { print("checked"); }
                         ?>
                         >
                         <span class="checkbox__text">Показывать выполненные</span>
@@ -46,18 +46,18 @@
 
                 <table class="tasks">
                     <?php foreach ($work as $item): ?>
-                        <?php if ($show_complete_tasks == 0 && $item['finish']) {
+                        <?php if ($showCompleteTasks == 0 && $item['finish']) {
                             continue;
                         } ?>
 
                         <tr class="tasks__item task">
 
                         <?php if ($item['finish']): ?>
-                            <td class="task--completed"><?= $item['task']; ?></td>
+                            <td class="task--completed"><?= filterXSS($item['task']); ?></td>
                         <?php else: ?>
-                            <td class="task__select"><?= $item['task']; ?></td>
+                            <td class="task__select"><?= filterXSS($item['task']); ?></td>
                         <?php endif; ?>
-                        <td><?= $item['date']; ?></td>
+                        <td><?= filterXSS($item['date']); ?></td>
                        </tr>
                     <?php endforeach; ?>
                 </table>
