@@ -1,0 +1,29 @@
+CREATE DATABASE work_okay
+  DEFAULT CHARACTER SET utf8
+  DEFAULT COLLATE utf8_general_ci;
+USE work_okay;
+
+CREATE TABLE projects (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name  VARCHAR(30),
+   user_id INT
+);
+
+CREATE TABLE tasks (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  date_creature TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  status TINYINT DEFAULT 0,
+  name VARCHAR(150),
+  date_completed TIMESTAMP,
+  user_id INT UNSIGNED,
+  project_id INT UNSIGNED
+);
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  email VARCHAR(45) NOT NULL UNIQUE,
+  name VARCHAR(30),
+  password CHAR (15)
+);
+
