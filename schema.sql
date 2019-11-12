@@ -14,10 +14,10 @@ CREATE TABLE tasks (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   status TINYINT(1) NOT NULL,
   name VARCHAR(150),
-  complited_datetime DATETIME,
+  completed_datetime DATETIME,
   user_id INT UNSIGNED NOT NULL,
   project_id INT UNSIGNED NOT NULL,
-  file_pat VARCHAR(255)
+  file_path VARCHAR(255)
 );
 
 CREATE TABLE users (
