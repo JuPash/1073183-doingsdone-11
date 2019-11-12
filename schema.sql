@@ -5,25 +5,25 @@ USE work_okay;
 
 CREATE TABLE projects (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  name  VARCHAR(30),
-   user_id INT
+  name VARCHAR(30) NOT NULL,
+   user_id INT NOT NULL
 );
 
 CREATE TABLE tasks (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  date_creature TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  status TINYINT DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  status TINYINT(1) NOT NULL,
   name VARCHAR(150),
-  date_completed TIMESTAMP,
-  user_id INT UNSIGNED,
-  project_id INT UNSIGNED
+  complited_datetime DATETIME,
+  user_id INT UNSIGNED NOT NULL,
+  project_id INT UNSIGNED NOT NULL,
+  file_pat VARCHAR(255)
 );
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   email VARCHAR(45) NOT NULL UNIQUE,
   name VARCHAR(30),
-  password CHAR (15)
+  password_hash CHAR (60) NOT NULL
 );
 
