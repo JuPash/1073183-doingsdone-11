@@ -6,7 +6,7 @@ USE work_okay;
 CREATE TABLE projects (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30) NOT NULL,
-   user_id INT NOT NULL
+  user_id INT NOT NULL
 );
 
 CREATE TABLE tasks (
