@@ -24,6 +24,6 @@ CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(45) NOT NULL UNIQUE,
   name VARCHAR(30),
-  password_hash CHAR (60) NOT NULL
+  password CHAR (60) NOT NULL
 );
 
