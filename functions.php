@@ -85,5 +85,4 @@ function categoryTaskCount($category, $tasks)
     }
     return $count;
 }
-
 ?>

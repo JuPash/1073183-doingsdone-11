@@ -14,7 +14,7 @@ CREATE TABLE tasks (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   status TINYINT(1) NOT NULL,
   name VARCHAR(150),
-  completed_datetime DATETIME,
+  date_completed DATETIME,
   user_id INT UNSIGNED NOT NULL,
   project_id INT UNSIGNED NOT NULL,
   file_path VARCHAR(255)
