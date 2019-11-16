@@ -5,9 +5,9 @@
                     <?php foreach ($categories as $key => $val): ?>
                     <ul class="main-navigation__list">
                         <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#"><?= filterXSS($val); ?></a>
+                            <a class="main-navigation__list-item-link" href="#"><?= filterXSS($val['name']); ?></a>
                             <span class="main-navigation__list-item-count">
-                            <?= categoryTaskCount($val, $work); ?>
+                            0
                             </span>
                         </li>
                     </ul>
@@ -46,28 +46,28 @@
 
                 <table class="tasks">
                     <?php foreach ($work as $item): ?>
-                        <?php if ($showCompleteTasks == 0 && $item['finish']) {
+                        <?php if ($showCompleteTasks == 0 && $item['status']) {
                             continue;
                         } ?>
 
                         <tr class="<?php
-                            if (isUrgent($item['date'])) {
+                            if (isUrgent($item['date_completed'])) {
                                 print('task--important');
                             }
                         ?>
                         tasks__item task">
                         <td class="task__select <?php
-                            if ($item['finish']){
+                            if ($item['status']){
                                 print('task--completed');
                             }
                             ?>
                             ">
                             <label class="checkbox task__checkbox">
                                 <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                                <span class="checkbox__text"><?= filterXSS($item['task']); ?></span>
+                                <span class="checkbox__text"><?= filterXSS($item['name']); ?></span>
                             </label>
                         </td>
-                        <td class="task__date"><?= filterXSS($item['date']); ?></td>
+                        <td class="task__date"><?= filterXSS($item['date_completed']); ?></td>
                        </tr>
                     <?php endforeach; ?>
                 </table>
