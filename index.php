@@ -1,31 +1,37 @@
 <?php
 if (isset($_GET['project'])) {
+  //получение параметра из гет запроса + защита от пользовательского ввода
   $project = filter_input(INPUT_GET, 'project', FILTER_SANITIZE_NUMBER_INT);
 }
 $title = 'Дела в порядке';
-
+  //подключение к базе данных
 $con = mysqli_connect("localhost", "root", "", "work_okay");
 if ($con == false) {
   print("Ошибка подключения: " . mysqli_connect_error());
   die;
 }
 mysqli_set_charset($con, "utf8");
-
+  //запрос в таблицу projects
 $sql = "SELECT id, name FROM projects";
 $result = mysqli_query($con, $sql);
 $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
 if (isset($project)) {
+  //если в GET запросе задан активный проект
   $sql = "SELECT id, status, name, date_completed FROM tasks WHERE project_id=$project";
 }
+  //если активный проект не задан
 else {
   $sql = "SELECT id, status, name, date_completed FROM tasks";
 }
+ //выполняем запрос на подключение задач
 $result = mysqli_query($con, $sql);
 if ($result == false) {
   print("Ошибка подключения: " . mysqli_error($con));
   die;
 }
+  //преобразовываем результат в массив
 $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+  //если нет задач выводим 404
 if (empty($tasks)){
   http_response_code(404);
   print 'ошибка 404';
