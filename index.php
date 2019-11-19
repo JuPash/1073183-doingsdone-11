@@ -1,5 +1,7 @@
 <?php
-
+if (isset($_GET['project'])){
+  $project=$_GET['project'];
+}
 $title = 'Дела в порядке';
 
 $con = mysqli_connect("localhost", "root", "", "work_okay");
@@ -12,14 +14,22 @@ mysqli_set_charset($con, "utf8");
 $sql = "SELECT id, name FROM projects";
 $result = mysqli_query($con, $sql);
 $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-$sql = "SELECT id, status, name, date_completed FROM tasks";
+if (isset($project)) {
+  $sql = "SELECT id, status, name, date_completed FROM tasks WHERE project_id=$project";
+}
+else {
+  $sql = "SELECT id, status, name, date_completed FROM tasks";
+}
 $result = mysqli_query($con, $sql);
 if ($result == false) {
   print("Ошибка подключения: " . mysqli_error($con));
   die;
 }
 $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+if (empty($tasks)){
+  http_response_code(404);
+  print 'ошибка 404';
+}
 
 require_once './functions.php';
 require_once './data.php';

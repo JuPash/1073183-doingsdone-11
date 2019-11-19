@@ -5,7 +5,13 @@
                     <?php foreach ($categories as $key => $val): ?>
                     <ul class="main-navigation__list">
                         <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#"><?= filterXSS($val['name']); ?></a>
+                            <a class="main-navigation__list-item-link
+                            <?php
+                            if (isset($_GET['project']) && $_GET['project'] == $val['id']){
+                                print 'main-navigation__list-item--active';
+                            }
+                            ?>
+                            " href="?project=<?= $val['id']; ?>"><?= filterXSS($val['name']); ?></a>
                             <span class="main-navigation__list-item-count">
                             0
                             </span>
