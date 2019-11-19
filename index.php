@@ -1,6 +1,6 @@
 <?php
-if (isset($_GET['project'])){
-  $project=$_GET['project'];
+if (isset($_GET['project'])) {
+  $project = filter_input(INPUT_GET, 'project', FILTER_SANITIZE_NUMBER_INT);
 }
 $title = 'Дела в порядке';
 
