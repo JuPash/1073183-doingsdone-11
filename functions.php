@@ -85,4 +85,24 @@ function categoryTaskCount($category, $tasks)
     }
     return $count;
 }
+
+//получить проекты из базы данных
+function getProjectsFromDB($connection) {
+  $sql = "SELECT id, name FROM projects";
+  $result = mysqli_query($connection, $sql);
+  $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+  return $projects;
+}
+
+//подключение к базе данных
+function getDBConnection() {
+  $con = mysqli_connect("localhost", "root", "", "work_okay");
+  if ($con == false) {
+    print("Ошибка подключения: " . mysqli_connect_error());
+    die;
+  }
+  mysqli_set_charset($con, "utf8");
+  return $con;
+}
+
 ?>
