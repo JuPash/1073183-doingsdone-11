@@ -1,29 +1,3 @@
-<section class="content__side">
-                <h2 class="content__side-heading">Проекты</h2>
-
-                <nav class="main-navigation">
-                    <?php foreach ($categories as $key => $val): ?>
-                    <ul class="main-navigation__list">
-                        <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link
-                            <?php
-                            if (isset($_GET['project']) && $_GET['project'] == $val['id']){
-                                print 'main-navigation__list-item--active';
-                            }
-                            ?>
-                            " href="?project=<?= $val['id']; ?>"><?= filterXSS($val['name']); ?></a>
-                            <span class="main-navigation__list-item-count">
-                            0
-                            </span>
-                        </li>
-                    </ul>
-                    <?php endforeach; ?>
-                </nav>
-
-                <a class="button button--transparent button--plus content__side-button" href="pages/form-project.html" target="project_add">Добавить проект</a>
-            </section>
-
-
             <main class="content__main">
                 <h2 class="content__main-heading">Список задач</h2>
 

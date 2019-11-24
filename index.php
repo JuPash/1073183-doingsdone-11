@@ -35,6 +35,6 @@ if (empty($tasks)){
 // показывать или нет выполненные задачи
 $showCompleteTasks = rand(0, 1);
 $content = includeTemplate('main.php', ['work' => $tasks, 'categories' => $projects, 'showCompleteTasks' => $showCompleteTasks]);
-include('templates/layout.php');
+print includeTemplate('layout.php', ['categories' => $projects, 'content' => $content]);
 
 ?>
