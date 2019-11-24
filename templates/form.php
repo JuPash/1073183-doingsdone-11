@@ -3,7 +3,7 @@
 
         <form class="form"  action="add.php" method="post" autocomplete="off">
           <div class="form__row">
-          <?php
+            <?php
               if (isset($errors['name'])) {
                 print '<p class="form__message">'.$errors['name'].'</p>';
               }
@@ -31,9 +31,20 @@
           </div>
 
           <div class="form__row">
+            <?php
+              if (isset($errors['date'])) {
+                print '<p class="form__message">'.$errors['date'].'</p>';
+              }
+            ?>
             <label class="form__label" for="date">Дата выполнения</label>
 
-            <input class="form__input form__input--date" type="text" name="date" id="date" value="" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+            <input class="form__input form__input--date
+            <?php
+              if (isset($errors['date'])) {
+                print 'form__input--error';
+              }
+            ?>
+            " type="text" name="date" id="date" value="" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
           </div>
 
           <div class="form__row">
