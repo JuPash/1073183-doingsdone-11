@@ -18,7 +18,14 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
   if (!isset($_POST['project']) || (!in_array($_POST['project'], $projectIdColumn))) {
     $errors['project'] = 'Указанный проект не существует';
   }
+  if (isset($_FILES['file'])) {
+    $file_name = $_FILES['file']['name'];
+    $file_path = __DIR__ . '/uploads/';
+    $file_url = '/uploads/' . $file_name;
+    move_uploaded_file($_FILES['file']['tmp_name'], $file_path . $file_name);
+  }
 }
+
 
 $content = includeTemplate('form.php', ['categories' => $projects, 'errors' => $errors]);
 print includeTemplate('layout.php', ['categories' => $projects, 'content' => $content, 'title' => $title]);
