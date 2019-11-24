@@ -20,9 +20,20 @@
           </div>
 
           <div class="form__row">
+            <?php
+              if (isset($errors['project'])) {
+                print '<p class="form__message">'.$errors['project'].'</p>';
+              }
+            ?>
             <label class="form__label" for="project">Проект <sup>*</sup></label>
 
-            <select class="form__input form__input--select" name="project" id="project">
+            <select class="form__input form__input--select
+              <?php
+                if (isset($errors['project'])) {
+                  print 'form__input--error';
+                }
+              ?>
+            " name="project" id="project">
              <?php foreach ($categories as $project) {
                print('<option value="'.$project['id'].'">'.$project['name'].'</option>');
              }

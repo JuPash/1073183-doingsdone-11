@@ -14,6 +14,10 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
   elseif (!isset($_POST['date']) || (strtotime($_POST['date']) < time())) {
     $errors['date'] = 'Дата должна быть больше или равна текущей';
   }
+  $projectIdColumn = array_column($projects, 'id');
+  if (!isset($_POST['project']) || (!in_array($_POST['project'], $projectIdColumn))) {
+    $errors['project'] = 'Указанный проект не существует';
+  }
 }
 
 $content = includeTemplate('form.php', ['categories' => $projects, 'errors' => $errors]);
