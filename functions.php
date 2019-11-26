@@ -14,7 +14,7 @@
  * @return bool true при совпадении с форматом 'ГГГГ-ММ-ДД', иначе false
  */
 function is_date_valid(string $date) : bool {
-  $format_to_check = 'd.m.Y';
+  $format_to_check = 'Y-m-d';
   $dateTimeObj = date_create_from_format($format_to_check, $date);
 
   return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
@@ -84,6 +84,35 @@ function categoryTaskCount($category, $tasks)
         }
     }
     return $count;
+}
+
+//отправка формы в БД
+function createTaskInDB($connection, $name, $date, $user, $project, $file) {
+  $name = filterXSS($name);
+  $sql = "INSERT INTO tasks (status, name, date_completed, user_id, project_id, file_path) VALUES (0, '$name', '$date', $user, $project, '$file');";
+  $result = mysqli_query($connection, $sql);
+  if ($result == false) {
+    print 'Ошибка добавления в базу данных';
+  }
+}
+
+//получить проекты из базы данных
+function getProjectsFromDB($connection) {
+  $sql = "SELECT id, name FROM projects";
+  $result = mysqli_query($connection, $sql);
+  $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+  return $projects;
+}
+
+//подключение к базе данных
+function getDBConnection() {
+  $con = mysqli_connect("localhost", "root", "", "work_okay");
+  if ($con == false) {
+    print("Ошибка подключения: " . mysqli_connect_error());
+    die;
+  }
+  mysqli_set_charset($con, "utf8");
+  return $con;
 }
 
 ?>

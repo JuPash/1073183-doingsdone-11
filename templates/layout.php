@@ -16,7 +16,7 @@
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus open-modal" href="pages/form-task.html">Добавить задачу</a>
+                <a class="main-header__side-item button button--plus open-modal" href="/add.php">Добавить задачу</a>
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__data">
                         <p>Константин</p>
@@ -26,7 +26,31 @@
             </div>
         </header>
         <div class="content">
-           <?= $content; ?>
+            <section class="content__side">
+                <h2 class="content__side-heading">Проекты</h2>
+
+                <nav class="main-navigation">
+                    <?php foreach ($categories as $key => $val): ?>
+                    <ul class="main-navigation__list">
+                        <li class="main-navigation__list-item">
+                            <a class="main-navigation__list-item-link
+                            <?php
+                            if (isset($_GET['project']) && $_GET['project'] == $val['id']){
+                                print 'main-navigation__list-item--active';
+                            }
+                            ?>
+                            " href="?project=<?= $val['id']; ?>"><?= filterXSS($val['name']); ?></a>
+                            <span class="main-navigation__list-item-count">
+                            0
+                            </span>
+                        </li>
+                    </ul>
+                    <?php endforeach; ?>
+                </nav>
+
+                <a class="button button--transparent button--plus content__side-button" href="#" target="project_add">Добавить проект</a>
+            </section>
+            <?= $content; ?>
         </div>
     </div>
 </div>
@@ -39,7 +63,7 @@
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
 
-        <a class="main-footer__button button button--plus" href="pages/form-task.html">Добавить задачу</a>
+        <a class="main-footer__button button button--plus" href="/add.php">Добавить задачу</a>
 
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>

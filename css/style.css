@@ -564,12 +564,11 @@ a:focus {
 
 .download-link {
   position: relative;
-
   padding-left: 18px;
-
   font-size: 13px;
   color: #9172e9;
   text-decoration: none;
+  margin-left: 15px;
 }
 
 .download-link:active {
