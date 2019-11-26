@@ -86,6 +86,16 @@ function categoryTaskCount($category, $tasks)
     return $count;
 }
 
+//отправка формы в БД
+function createTaskInDB($connection, $name, $date, $user, $project, $file) {
+  $name = filterXSS($name);
+  $sql = "INSERT INTO tasks (status, name, date_completed, user_id, project_id, file_path) VALUES (0, '$name', '$date', $user, $project, '$file');";
+  $result = mysqli_query($connection, $sql);
+  if ($result == false) {
+    print 'Ошибка добавления в базу данных';
+  }
+}
+
 //получить проекты из базы данных
 function getProjectsFromDB($connection) {
   $sql = "SELECT id, name FROM projects";

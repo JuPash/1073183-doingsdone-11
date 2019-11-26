@@ -44,7 +44,10 @@
                             ">
                             <label class="checkbox task__checkbox">
                                 <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                                <span class="checkbox__text"><?= filterXSS($item['name']); ?></span>
+                                <span class="checkbox__text"><?= filterXSS($item['name']); ?>
+                                <a class="download-link" href="#"></a>
+                                </span>
+
                             </label>
                         </td>
                         <td class="task__date"><?= filterXSS($item['date_completed']); ?></td>
