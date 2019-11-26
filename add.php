@@ -21,6 +21,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
   }
   if (isset($_FILES['file']) && $_FILES['file']['name'] != '') {
     $file_name = $_FILES['file']['name'];
+    $file_name = str_replace(';', '', $file_name);
+    $file_name = str_replace("'", '', $file_name);
     $file_path = __DIR__ . '/uploads/';
     $file_url = '/uploads/' . $file_name;
     move_uploaded_file($_FILES['file']['tmp_name'], $file_path . $file_name);
