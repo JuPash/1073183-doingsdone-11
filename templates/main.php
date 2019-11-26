@@ -45,7 +45,11 @@
                             <label class="checkbox task__checkbox">
                                 <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
                                 <span class="checkbox__text"><?= filterXSS($item['name']); ?>
-                                <a class="download-link" href="#"></a>
+                                <?php
+                                if ($item['file_path'] != null) {
+                                ?>
+                                <a class="download-link" href="<?= $item['file_path']; ?>"></a>
+                                <?php } ?>
                                 </span>
 
                             </label>

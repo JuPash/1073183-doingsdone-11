@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
   if (!isset($_POST['project']) || (!in_array($_POST['project'], $projectIdColumn))) {
     $errors['project'] = 'Указанный проект не существует';
   }
-  if (isset($_FILES['file'])) {
+  if (isset($_FILES['file']) && $_FILES['file']['name'] != '') {
     $file_name = $_FILES['file']['name'];
     $file_path = __DIR__ . '/uploads/';
     $file_url = '/uploads/' . $file_name;
@@ -27,6 +27,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
   }
   if (count($errors) == 0) {
     createTaskInDB($con, $_POST['name'], $_POST['date'], 1, $_POST['project'], $file_url);
+    header("Location: /index.php");
+    exit;
   }
 }
 

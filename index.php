@@ -12,11 +12,11 @@ $con = getDBConnection();
 $projects = getProjectsFromDB($con);
 if (isset($project)) {
   //если в GET запросе задан активный проект
-  $sql = "SELECT id, status, name, date_completed FROM tasks WHERE project_id=$project";
+  $sql = "SELECT id, status, name, date_completed, file_path FROM tasks WHERE project_id=$project";
 }
   //если активный проект не задан
 else {
-  $sql = "SELECT id, status, name, date_completed FROM tasks";
+  $sql = "SELECT id, status, name, date_completed, file_path FROM tasks";
 }
  //выполняем запрос на подключение задач
 $result = mysqli_query($con, $sql);
