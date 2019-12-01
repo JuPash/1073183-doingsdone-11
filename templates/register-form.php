@@ -11,7 +11,7 @@
                 print 'form__input--error';
               }
               ?>
-              " type="text" name="email" id="email" value="" placeholder="Введите e-mail">
+              " type="text" name="email" id="email" value="<?= $_POST['email'] ?? '' ?>" placeholder="Введите e-mail">
               <?php
               if (isset($errors['email'])) {
                 print '<p class="form__message">'.$errors['email'].'</p>';
@@ -45,7 +45,7 @@
                 print 'form__input--error';
               }
               ?>
-              " type="text" name="name" id="name" value="" placeholder="Введите имя">
+              " type="text" name="name" id="name" value="<?= $_POST['name'] ?? '' ?>" placeholder="Введите имя">
               <?php
               if (isset($errors['name'])) {
                 print '<p class="form__message">'.$errors['name'].'</p>';

@@ -86,7 +86,18 @@ function categoryTaskCount($category, $tasks)
     return $count;
 }
 
-//отправка формы в БД
+//создание пользователя в БД
+function createUserInDB($connection, $name, $email, $password) {
+  $name = filterXSS($name);
+  $password = sha1($password);
+  $sql = "INSERT INTO users (email, name, password) VALUES ('$email', '$name', '$password');";
+  $result = mysqli_query($connection, $sql);
+  if ($result == false) {
+    print "Ошибка добавления пользователя в базу данных: $sql";
+  }
+}
+
+//создание задач в БД
 function createTaskInDB($connection, $name, $date, $user, $project, $file) {
   $name = filterXSS($name);
   $sql = "INSERT INTO tasks (status, name, date_completed, user_id, project_id, file_path) VALUES (0, '$name', '$date', $user, $project, '$file');";

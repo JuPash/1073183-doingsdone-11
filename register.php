@@ -19,6 +19,12 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
   if (!isset($_POST['name']) || $_POST['name'] == '') {
     $errors['name'] = 'Укажите имя';
   }
+  if (count($errors) == 0) {
+    $con = getDBConnection();
+    createUserInDB($con, $_POST['name'], $_POST['email'], $_POST['password']);
+    header("Location: /index.php");
+    exit;
+  }
 }
 $content = includeTemplate('register-form.php', ['errors' => $errors]);
 print includeTemplate('layout.php', ['content' => $content, 'title' => $title]);
