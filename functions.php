@@ -86,6 +86,22 @@ function categoryTaskCount($category, $tasks)
     return $count;
 }
 
+function getUserFromDB($connection, $email) {
+  $sql = "SELECT id, password FROM users WHERE email = '$email'";
+  $result = mysqli_query($connection, $sql);
+  if ($result == false) {
+    print "Ошибка запроса к БД: $sql";
+    return NULL;
+  }
+  $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+   if (count($users) == 0) {
+     return NULL;
+   }
+   else {
+     return $users[0];
+   }
+}
+
 //создание пользователя в БД
 function createUserInDB($connection, $name, $email, $password) {
   $name = filterXSS($name);

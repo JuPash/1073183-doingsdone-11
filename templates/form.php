@@ -1,4 +1,4 @@
-<main class="content__main">
+      <main class="content__main">
         <h2 class="content__main-heading">Добавление задачи</h2>
 
         <form class="form" action="add.php" method="post" autocomplete="off" enctype="multipart/form-data">
