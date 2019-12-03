@@ -23,7 +23,7 @@
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__data">
                         <p>Константин</p>
-                        <a href="#">Выйти</a>
+                        <a href="/logout.php">Выйти</a>
                     </div>
                 </div>
                 <?php
