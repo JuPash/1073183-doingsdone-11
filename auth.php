@@ -36,6 +36,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
   }
 }
-$content = includeTemplate('login-form.php', ['errors' => $errors]);
+$content = includeTemplate('auth-form.php', ['errors' => $errors]);
 print includeTemplate('layout.php', ['content' => $content, 'title' => $title]);
 ?>
