@@ -2,6 +2,11 @@
 session_start();
 require_once './functions.php';
 
+if (!isset($_SESSION['user_id'])) {
+  print includeTemplate('guest.php', []);
+  exit;
+}
+
 if (isset($_GET['project'])) {
   //получение параметра из гет запроса + защита от пользовательского ввода
   $project = filter_input(INPUT_GET, 'project', FILTER_SANITIZE_NUMBER_INT);
