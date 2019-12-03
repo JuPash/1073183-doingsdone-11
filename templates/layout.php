@@ -16,6 +16,9 @@
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
             <div class="main-header__side">
+                <?php
+                    if (isset($_SESSION['user_id'])) {
+                ?>
                 <a class="main-header__side-item button button--plus open-modal" href="/add.php">Добавить задачу</a>
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__data">
@@ -23,6 +26,14 @@
                         <a href="#">Выйти</a>
                     </div>
                 </div>
+                <?php
+                }
+                else {
+                ?>
+                    <a class="main-header__side-item button button--transparent" href="form-authorization.html">Войти</a>
+                <?php
+                }
+                ?>
             </div>
         </header>
 
