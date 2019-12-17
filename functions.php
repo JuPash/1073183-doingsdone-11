@@ -124,8 +124,8 @@ function createTaskInDB($connection, $name, $date, $user, $project, $file) {
 }
 
 //получить проекты из базы данных
-function getProjectsFromDB($connection) {
-  $sql = "SELECT id, name FROM projects";
+function getProjectsFromDB($connection, $user) {
+  $sql = "SELECT id, name FROM projects where user_id=$user";
   $result = mysqli_query($connection, $sql);
   $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
   return $projects;

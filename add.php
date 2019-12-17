@@ -3,7 +3,8 @@ session_start();
 require_once './functions.php';
 $con = getDBConnection();
 $title = 'Добавить задачу';
-$projects = getProjectsFromDB($con);
+$uid = $_SESSION['user_id'];
+$projects = getProjectsFromDB($con, $uid);
 $errors = [];
 $file_url = '';
 if ($_SERVER["REQUEST_METHOD"]=="POST") {

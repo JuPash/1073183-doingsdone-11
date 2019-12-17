@@ -16,7 +16,7 @@ $uid = $_SESSION['user_id'];
   //подключение к базе данных
 $con = getDBConnection();
   //запрос в таблицу projects
-$projects = getProjectsFromDB($con);
+$projects = getProjectsFromDB($con, $uid);
 if (isset($project)) {
   //если в GET запросе задан активный проект
   $sql = "SELECT id, status, name, date_completed, file_path FROM tasks WHERE project_id=$project and user_id=$uid";
