@@ -5,6 +5,7 @@ $con = getDBConnection();
 $title = 'Добавить проект';
 $uid = $_SESSION['user_id'];
 $projects = getProjectsFromDB($con, $uid);
+$user_info = getUserInfoFromDB($con, $uid);
 $errors = [];
 if ($_SERVER["REQUEST_METHOD"]=="POST") {
   if (!isset($_POST['name']) || $_POST['name'] == '') {
@@ -19,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
 
 $content = includeTemplate('project-form.php', ['categories' => $projects, 'errors' => $errors]);
-print includeTemplate('layout.php', ['categories' => $projects, 'content' => $content, 'title' => $title]);
+print includeTemplate('layout.php', ['categories' => $projects, 'content' => $content, 'title' => $title,
+  'user_info' => $user_info]);
 
 ?>

@@ -17,6 +17,8 @@ $uid = $_SESSION['user_id'];
 $con = getDBConnection();
   //запрос в таблицу projects
 $projects = getProjectsFromDB($con, $uid);
+  //запрос в таблицу users
+$user_info = getUserInfoFromDB($con, $uid);
 if (isset($project)) {
   //если в GET запросе задан активный проект
   $sql = "SELECT id, status, name, date_completed, file_path FROM tasks WHERE project_id=$project and user_id=$uid";
@@ -37,6 +39,7 @@ $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
 // показывать или нет выполненные задачи
 $showCompleteTasks = $_GET['show_completed'] ?? 0;
 $content = includeTemplate('main.php', ['work' => $tasks, 'categories' => $projects, 'showCompleteTasks' => $showCompleteTasks]);
-print includeTemplate('layout.php', ['categories' => $projects, 'content' => $content, 'title' => $title]);
+print includeTemplate('layout.php', ['categories' => $projects, 'content' => $content, 'title' => $title,
+  'user_info' => $user_info]);
 
 ?>

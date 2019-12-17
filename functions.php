@@ -142,6 +142,14 @@ function getProjectsFromDB($connection, $user) {
   return $projects;
 }
 
+//получить имя юзера из БД
+function getUserInfoFromDB($connection, $user) {
+  $sql = "SELECT email, name FROM users where id=$user";
+  $result = mysqli_query($connection, $sql);
+  $user_info = mysqli_fetch_all($result, MYSQLI_ASSOC)[0];
+  return $user_info;
+}
+
 //подключение к базе данных
 function getDBConnection() {
   $con = mysqli_connect("localhost", "root", "", "work_okay");
