@@ -62,7 +62,7 @@
                     </ul>
                     <?php endforeach; ?>
                 </nav>
-                <a class="button button--transparent button--plus content__side-button" href="#" target="project_add">Добавить проект</a>
+                <a class="button button--transparent button--plus content__side-button" href="/project.php" target="project_add">Добавить проект</a>
                 <?php
                 }
                 else {

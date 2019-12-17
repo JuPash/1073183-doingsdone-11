@@ -123,6 +123,17 @@ function createTaskInDB($connection, $name, $date, $user, $project, $file) {
   }
 }
 
+//создание проектов в БД
+function createProjectInDB($connection, $name, $user) {
+  $name = filterXSS($name);
+  $sql = "INSERT INTO projects (name, user_id) VALUES ('$name', $user);";
+  $result = mysqli_query($connection, $sql);
+  if ($result == false) {
+    print 'Ошибка добавления в базу данных';
+  }
+}
+
+
 //получить проекты из базы данных
 function getProjectsFromDB($connection, $user) {
   $sql = "SELECT id, name FROM projects where user_id=$user";
