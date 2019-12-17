@@ -86,7 +86,34 @@ function categoryTaskCount($category, $tasks)
     return $count;
 }
 
-//отправка формы в БД
+function getUserFromDB($connection, $email) {
+  $sql = "SELECT id, password FROM users WHERE email = '$email'";
+  $result = mysqli_query($connection, $sql);
+  if ($result == false) {
+    print "Ошибка запроса к БД: $sql";
+    return NULL;
+  }
+  $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+   if (count($users) == 0) {
+     return NULL;
+   }
+   else {
+     return $users[0];
+   }
+}
+
+//создание пользователя в БД
+function createUserInDB($connection, $name, $email, $password) {
+  $name = filterXSS($name);
+  $password = sha1($password);
+  $sql = "INSERT INTO users (email, name, password) VALUES ('$email', '$name', '$password');";
+  $result = mysqli_query($connection, $sql);
+  if ($result == false) {
+    print "Ошибка добавления пользователя в базу данных: $sql";
+  }
+}
+
+//создание задач в БД
 function createTaskInDB($connection, $name, $date, $user, $project, $file) {
   $name = filterXSS($name);
   $sql = "INSERT INTO tasks (status, name, date_completed, user_id, project_id, file_path) VALUES (0, '$name', '$date', $user, $project, '$file');";
@@ -96,12 +123,31 @@ function createTaskInDB($connection, $name, $date, $user, $project, $file) {
   }
 }
 
+//создание проектов в БД
+function createProjectInDB($connection, $name, $user) {
+  $name = filterXSS($name);
+  $sql = "INSERT INTO projects (name, user_id) VALUES ('$name', $user);";
+  $result = mysqli_query($connection, $sql);
+  if ($result == false) {
+    print 'Ошибка добавления в базу данных';
+  }
+}
+
+
 //получить проекты из базы данных
-function getProjectsFromDB($connection) {
-  $sql = "SELECT id, name FROM projects";
+function getProjectsFromDB($connection, $user) {
+  $sql = "SELECT id, name FROM projects where user_id=$user";
   $result = mysqli_query($connection, $sql);
   $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
   return $projects;
+}
+
+//получить имя юзера из БД
+function getUserInfoFromDB($connection, $user) {
+  $sql = "SELECT email, name FROM users where id=$user";
+  $result = mysqli_query($connection, $sql);
+  $user_info = mysqli_fetch_all($result, MYSQLI_ASSOC)[0];
+  return $user_info;
 }
 
 //подключение к базе данных

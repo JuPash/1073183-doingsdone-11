@@ -10,19 +10,32 @@
 <body>
 <h1 class="visually-hidden">Дела в порядке</h1>
 <div class="page-wrapper">
-    <div class="container container--with-sidebar">
+    <div class="container">
         <header class="main-header">
             <a href="/">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
             <div class="main-header__side">
+                <?php
+                    if (isset($_SESSION['user_id'])) {
+                ?>
                 <a class="main-header__side-item button button--plus open-modal" href="/add.php">Добавить задачу</a>
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__data">
-                        <p>Константин</p>
-                        <a href="#">Выйти</a>
+                        <p>
+                            <?= $user_info['name'] ?>
+                        </p>
+                        <a href="/logout.php">Выйти</a>
                     </div>
                 </div>
+                <?php
+                }
+                else {
+                ?>
+                    <a class="main-header__side-item button button--transparent" href="/auth.php">Войти</a>
+                <?php
+                }
+                ?>
             </div>
         </header>
 
@@ -51,14 +64,14 @@
                     </ul>
                     <?php endforeach; ?>
                 </nav>
-                <a class="button button--transparent button--plus content__side-button" href="#" target="project_add">Добавить проект</a>
+                <a class="button button--transparent button--plus content__side-button" href="/project.php" target="project_add">Добавить проект</a>
                 <?php
                 }
                 else {
                 ?>
                 <p class="content__side-info">Если у вас уже есть аккаунт, авторизуйтесь на сайте</p>
 
-                <a class="button button--transparent content__side-button" href="form-authorization.html">Войти</a>
+                <a class="button button--transparent content__side-button" href="/auth.php">Войти</a>
                 <?php
                 }
                 ?>

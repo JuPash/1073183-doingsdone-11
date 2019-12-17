@@ -1,8 +1,11 @@
 <?php
+session_start();
 require_once './functions.php';
 $con = getDBConnection();
 $title = 'Добавить задачу';
-$projects = getProjectsFromDB($con);
+$uid = $_SESSION['user_id'];
+$projects = getProjectsFromDB($con, $uid);
+$user_info = getUserInfoFromDB($con, $uid);
 $errors = [];
 $file_url = '';
 if ($_SERVER["REQUEST_METHOD"]=="POST") {
@@ -36,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
 
 $content = includeTemplate('form.php', ['categories' => $projects, 'errors' => $errors]);
-print includeTemplate('layout.php', ['categories' => $projects, 'content' => $content, 'title' => $title]);
+print includeTemplate('layout.php', ['categories' => $projects, 'content' => $content, 'title' => $title,
+  'user_info' => $user_info]);
 
 ?>
