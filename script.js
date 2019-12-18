@@ -13,6 +13,17 @@ if ($checkbox.length) {
   });
 }
 
+var tasksCB = document.querySelectorAll('input.task__checkbox');
+tasksCB.forEach(e => {
+  e.addEventListener('change', function (event) {
+    var is_checked = +event.target.checked;
+    var searchParams = new URLSearchParams();
+    searchParams.set('status', is_checked);
+    searchParams.set('task', +event.target.dataset.task);
+    window.location = '/status.php?' + searchParams.toString();
+  })
+});
+
 flatpickr('#date', {
   enableTime: false,
   dateFormat: "Y-m-d",

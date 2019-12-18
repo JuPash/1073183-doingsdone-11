@@ -41,13 +41,19 @@
                         ?>
                         tasks__item task">
                         <td class="task__select <?php
-                            if ($item['status']){
+                            if ($item['status']) {
                                 print('task--completed');
                             }
                             ?>
                             ">
                             <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
+                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" data-task="<?= $item['id']; ?>"
+                                <?php
+                                if ($item['status']) {
+                                    print('checked');
+                                }
+                                ?>
+                                >
                                 <span class="checkbox__text"><?= filterXSS($item['name']); ?>
                                 <?php
                                 if ($item['file_path'] != null) {

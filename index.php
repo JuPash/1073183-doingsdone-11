@@ -21,8 +21,8 @@ $con = getDBConnection();
 $projects = getProjectsFromDB($con, $uid);
   //запрос в таблицу users
 $user_info = getUserInfoFromDB($con, $uid);
-if (isset($_GET['search'])) {
-  $search = filterXSS($_GET['search']);
+$search = trim(filterXSS($_GET['search'] ?? ''));
+if ($search != '') {
   $sql = "SELECT id, status, name, date_completed, file_path, MATCH(name) AGAINST('$search*' IN BOOLEAN MODE) as score
    FROM tasks
    WHERE MATCH(name) AGAINST('$search*' IN BOOLEAN MODE) and user_id=$uid";
