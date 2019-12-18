@@ -8,17 +8,15 @@
 
                 <div class="tasks-controls">
                     <nav class="tasks-switch">
-                        <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-                        <a href="/" class="tasks-switch__item">Повестка дня</a>
-                        <a href="/" class="tasks-switch__item">Завтра</a>
-                        <a href="/" class="tasks-switch__item">Просроченные</a>
+                        <a href="/" class="tasks-switch__item <?php if ($filter == '') { print("tasks-switch__item--active"); } ?>">Все задачи</a>
+                        <a href="/index.php?filter=today" class="tasks-switch__item <?php if ($filter == 'today') { print("tasks-switch__item--active"); } ?>">Повестка дня</a>
+                        <a href="/index.php?filter=tomorrow" class="tasks-switch__item <?php if ($filter == 'tomorrow') { print("tasks-switch__item--active"); } ?>">Завтра</a>
+                        <a href="/index.php?filter=overdue" class="tasks-switch__item <?php if ($filter == 'overdue') { print("tasks-switch__item--active"); } ?>">Просроченные</a>
                     </nav>
 
                     <label class="checkbox">
                         <input class="checkbox__input visually-hidden show_completed" type="checkbox"
-                        <?php
-                            if ($showCompleteTasks == 1) { print("checked"); }
-                        ?>
+                        <?php if ($showCompleteTasks == 1) { print("checked"); } ?>
                         >
                         <span class="checkbox__text">Показывать выполненные</span>
                     </label>
@@ -41,13 +39,19 @@
                         ?>
                         tasks__item task">
                         <td class="task__select <?php
-                            if ($item['status']){
+                            if ($item['status']) {
                                 print('task--completed');
                             }
                             ?>
                             ">
                             <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
+                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" data-task="<?= $item['id']; ?>"
+                                <?php
+                                if ($item['status']) {
+                                    print('checked');
+                                }
+                                ?>
+                                >
                                 <span class="checkbox__text"><?= filterXSS($item['name']); ?>
                                 <?php
                                 if ($item['file_path'] != null) {

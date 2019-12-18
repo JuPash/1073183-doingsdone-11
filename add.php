@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
   if (!isset($_POST['date']) || !is_date_valid($_POST['date'])) {
     $errors['date'] = 'Некорректная дата';
   }
-  elseif (!isset($_POST['date']) || (strtotime($_POST['date']) < time())) {
+  elseif (!isset($_POST['date']) || (strtotime($_POST['date']) < strtotime('today'))) {
     $errors['date'] = 'Дата должна быть больше или равна текущей';
   }
   $projectIdColumn = array_column($projects, 'id');
