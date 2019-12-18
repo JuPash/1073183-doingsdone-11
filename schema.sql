@@ -27,3 +27,6 @@ CREATE TABLE users (
   password CHAR (60) NOT NULL
 );
 
+CREATE FULLTEXT INDEX task_ft_search
+ON tasks(name);
+

@@ -2,8 +2,10 @@
 session_start();
 require_once './functions.php';
 
+$title = 'Дела в порядке';
+
 if (!isset($_SESSION['user_id'])) {
-  print includeTemplate('guest.php', []);
+  print includeTemplate('guest.php', ['title' => $title]);
   exit;
 }
 
@@ -11,7 +13,7 @@ if (isset($_GET['project'])) {
   //получение параметра из гет запроса + защита от пользовательского ввода
   $project = filter_input(INPUT_GET, 'project', FILTER_SANITIZE_NUMBER_INT);
 }
-$title = 'Дела в порядке';
+
 $uid = $_SESSION['user_id'];
   //подключение к базе данных
 $con = getDBConnection();
@@ -19,13 +21,18 @@ $con = getDBConnection();
 $projects = getProjectsFromDB($con, $uid);
   //запрос в таблицу users
 $user_info = getUserInfoFromDB($con, $uid);
-if (isset($project)) {
-  //если в GET запросе задан активный проект
-  $sql = "SELECT id, status, name, date_completed, file_path FROM tasks WHERE project_id=$project and user_id=$uid";
+if (isset($_GET['search'])) {
+  $search = filterXSS($_GET['search']);
+  $sql = "SELECT id, status, name, date_completed, file_path, MATCH(name) AGAINST('$search*' IN BOOLEAN MODE) as score
+   FROM tasks
+   WHERE MATCH(name) AGAINST('$search*' IN BOOLEAN MODE) and user_id=$uid";
 }
-  //если активный проект не задан
 else {
   $sql = "SELECT id, status, name, date_completed, file_path FROM tasks WHERE user_id=$uid";
+}
+if (isset($project)) {
+  //если в GET запросе задан активный проект
+  $sql = $sql . " and project_id=$project";
 }
  //выполняем запрос на подключение задач
 $result = mysqli_query($con, $sql);
