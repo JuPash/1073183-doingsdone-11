@@ -14,24 +14,25 @@
  * @return bool true при совпадении с форматом 'ГГГГ-ММ-ДД', иначе false
  */
 function is_date_valid(string $date) : bool {
-  $format_to_check = 'Y-m-d';
-  $dateTimeObj = date_create_from_format($format_to_check, $date);
+    $format_to_check = 'Y-m-d';
+    $dateTimeObj = date_create_from_format($format_to_check, $date);
 
-  return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
+    return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
 }
+
 // Определяет осталось ли меньше 24 часов до конца задачи
 function isUrgent($date) {
-  if ($date == '') {
-    return false;
-  }
-  $timeStamp = strtotime($date);
-  $difference = $timeStamp - time();
-  if ($difference < 86400) {
-    return true;
-  }
-  else {
-    return false;
-  }
+    if ($date == '') {
+        return false;
+    }
+    $timeStamp = strtotime($date);
+    $difference = $timeStamp - time();
+    if ($difference < 86400) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 /**
@@ -41,20 +42,20 @@ function isUrgent($date) {
  * @return string Итоговый HTML
  */
 function includeTemplate($name, array $data = []) {
-  $name = 'templates/' . $name;
-  $result = 'not found';
+    $name = 'templates/' . $name;
+    $result = 'not found';
 
-  if (!is_readable($name)) {
-      return $result;
-  }
+    if (!is_readable($name)) {
+        return $result;
+    }
 
-  ob_start();
-  extract($data);
-  require $name;
+    ob_start();
+    extract($data);
+    require $name;
 
-  $result = ob_get_clean();
+    $result = ob_get_clean();
 
-  return $result;
+    return $result;
 }
 
 /**
@@ -63,10 +64,10 @@ function includeTemplate($name, array $data = []) {
  * @return string Обработанные данные
  */
 function filterXSS($data) {
-  $data = strip_tags($data);
-  $data = htmlentities($data, ENT_QUOTES, "UTF-8");
-  $data = htmlspecialchars($data, ENT_QUOTES);
-  return $data;
+    $data = strip_tags($data);
+    $data = htmlentities($data, ENT_QUOTES, "UTF-8");
+    $data = htmlspecialchars($data, ENT_QUOTES);
+    return $data;
 }
 
 /**
@@ -87,92 +88,92 @@ function categoryTaskCount($category, $tasks)
 }
 
 function getUserFromDB($connection, $email) {
-  $sql = "SELECT id, password FROM users WHERE email = '$email'";
-  $result = mysqli_query($connection, $sql);
-  if ($result == false) {
-    print "Ошибка запроса к БД: $sql";
-    return NULL;
-  }
-  $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
-   if (count($users) == 0) {
-     return NULL;
-   }
-   else {
-     return $users[0];
-   }
+    $sql = "SELECT id, password FROM users WHERE email = '$email'";
+    $result = mysqli_query($connection, $sql);
+    if ($result == false) {
+        print "Ошибка запроса к БД: $sql";
+        return NULL;
+    }
+    $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    if (count($users) == 0) {
+        return NULL;
+    }
+    else {
+        return $users[0];
+    }
 }
 
 //создание пользователя в БД
 function createUserInDB($connection, $name, $email, $password) {
-  $name = filterXSS($name);
-  $password = sha1($password);
-  $sql = "INSERT INTO users (email, name, password) VALUES ('$email', '$name', '$password');";
-  $result = mysqli_query($connection, $sql);
-  if ($result == false) {
-    print "Ошибка добавления пользователя в базу данных: $sql";
-  }
+    $name = filterXSS($name);
+    $password = sha1($password);
+    $sql = "INSERT INTO users (email, name, password) VALUES ('$email', '$name', '$password');";
+    $result = mysqli_query($connection, $sql);
+    if ($result == false) {
+        print "Ошибка добавления пользователя в базу данных: $sql";
+    }
 }
 
 //создание задач в БД
 function createTaskInDB($connection, $name, $date, $user, $project, $file) {
-  $name = filterXSS($name);
-  $sql = "INSERT INTO tasks (status, name, date_completed, user_id, project_id, file_path) VALUES (0, '$name', '$date', $user, $project, '$file');";
-  $result = mysqli_query($connection, $sql);
-  if ($result == false) {
-    print 'Ошибка добавления в базу данных';
-  }
+    $name = filterXSS($name);
+    $sql = "INSERT INTO tasks (status, name, date_completed, user_id, project_id, file_path) VALUES (0, '$name', '$date', $user, $project, '$file');";
+    $result = mysqli_query($connection, $sql);
+    if ($result == false) {
+        print 'Ошибка добавления в базу данных';
+    }
 }
 
 //создание проектов в БД
 function createProjectInDB($connection, $name, $user) {
-  $name = filterXSS($name);
-  $sql = "INSERT INTO projects (name, user_id) VALUES ('$name', $user);";
-  $result = mysqli_query($connection, $sql);
-  if ($result == false) {
-    print 'Ошибка добавления в базу данных';
-  }
+    $name = filterXSS($name);
+    $sql = "INSERT INTO projects (name, user_id) VALUES ('$name', $user);";
+    $result = mysqli_query($connection, $sql);
+    if ($result == false) {
+        print 'Ошибка добавления в базу данных';
+    }
 }
 
 
 //получить проекты из базы данных
 function getProjectsFromDB($connection, $user) {
-  $sql = "SELECT id, name FROM projects where user_id=$user";
-  $result = mysqli_query($connection, $sql);
-  $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
-  return $projects;
+    $sql = "SELECT id, name FROM projects where user_id=$user";
+    $result = mysqli_query($connection, $sql);
+    $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $projects;
 }
 
 //получить имя юзера из БД
 function getUserInfoFromDB($connection, $user) {
-  $sql = "SELECT email, name FROM users where id=$user";
-  $result = mysqli_query($connection, $sql);
-  $user_info = mysqli_fetch_all($result, MYSQLI_ASSOC)[0];
-  return $user_info;
+    $sql = "SELECT email, name FROM users where id=$user";
+    $result = mysqli_query($connection, $sql);
+    $user_info = mysqli_fetch_all($result, MYSQLI_ASSOC)[0];
+    return $user_info;
 }
 
 //подключение к базе данных
 function getDBConnection() {
-  $con = mysqli_connect("localhost", "root", "", "work_okay");
-  if ($con == false) {
-    print("Ошибка подключения: " . mysqli_connect_error());
-    die;
-  }
-  mysqli_set_charset($con, "utf8");
-  return $con;
+    $con = mysqli_connect("localhost", "root", "", "work_okay");
+    if ($con == false) {
+        print("Ошибка подключения: " . mysqli_connect_error());
+        die;
+    }
+    mysqli_set_charset($con, "utf8");
+    return $con;
 }
 
 function sendEmail($email, $text) {
-  $transport = (new Swift_SmtpTransport('phpdemo.ru', 25))
-    ->setUsername('keks@phpdemo.ru')
-    ->setPassword('htmlacademy');
+    $transport = (new Swift_SmtpTransport('phpdemo.ru', 25))
+        ->setUsername('keks@phpdemo.ru')
+        ->setPassword('htmlacademy');
 
-  $mailer = new Swift_Mailer($transport);
+    $mailer = new Swift_Mailer($transport);
 
-  $message = (new Swift_Message('Уведомление о задаче'))
-    ->setFrom(['keks@phpdemo.ru' => 'keks'])
-    ->setTo([$email])
-    ->setBody($text);
+    $message = (new Swift_Message('Уведомление о задаче'))
+        ->setFrom(['keks@phpdemo.ru' => 'keks'])
+        ->setTo([$email])
+        ->setBody($text);
 
-  $result = $mailer->send($message);
+    $result = $mailer->send($message);
 }
 ?>
