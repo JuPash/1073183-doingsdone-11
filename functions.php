@@ -14,6 +14,9 @@
  * @return bool true при совпадении с форматом 'ГГГГ-ММ-ДД', иначе false
  */
 function is_date_valid(string $date) : bool {
+    if ($date == '') {
+        return true;
+    }
     $format_to_check = 'Y-m-d';
     $dateTimeObj = date_create_from_format($format_to_check, $date);
 
@@ -134,8 +137,14 @@ function createUserInDB($connection, $name, $email, $password) {
  * @param string $file вложение
  */
 function createTaskInDB($connection, $name, $date, $user, $project, $file) {
+    if ($date == '') {
+        $date = 'NULL';
+    }
+    else {
+        $date = "'$date'";
+    }
     $name = filterXSS($name);
-    $sql = "INSERT INTO tasks (status, name, date_completed, user_id, project_id, file_path) VALUES (0, '$name', '$date', $user, $project, '$file');";
+    $sql = "INSERT INTO tasks (status, name, date_completed, user_id, project_id, file_path) VALUES (0, '$name', $date, $user, $project, '$file');";
     $result = mysqli_query($connection, $sql);
     if ($result == false) {
         print 'Ошибка добавления в базу данных';
