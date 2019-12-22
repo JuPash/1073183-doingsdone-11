@@ -12,6 +12,9 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     if (!isset($_POST['name']) || $_POST['name'] == '') {
         $errors['name'] = 'Не указано имя';
     }
+    elseif (strlen($_POST['name']) >= 30) {
+        $errors['name'] = 'Название проекта не должно превышать 30 знаков';
+    }
     if (!count($errors)) {
         createProjectInDB($con, $_POST['name'], $uid);
         header("Location: /index.php");

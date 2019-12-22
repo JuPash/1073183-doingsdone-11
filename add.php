@@ -11,7 +11,10 @@ $file_url = '';
 
 if ($_SERVER["REQUEST_METHOD"]=="POST") {
     if (!isset($_POST['name']) || $_POST['name'] == '') {
-    $errors['name'] = 'Не указано имя';
+        $errors['name'] = 'Не указано имя';
+    }
+    elseif (strlen($_POST['name']) >= 150) {
+        $errors['name'] = 'Длина не должна превышать 150 знаков';
     }
     if (!isset($_POST['date']) || !is_date_valid($_POST['date'])) {
         $errors['date'] = 'Некорректная дата';
@@ -23,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     if (!isset($_POST['project']) || (!in_array($_POST['project'], $projectIdColumn))) {
         $errors['project'] = 'Указанный проект не существует';
     }
-    if (isset($_FILES['file']) && $_FILES['file']['name'] != '') {
+    if (isset($_FILES['file']) && $_FILES['file']['name'] != '' && strlen($_FILES['file']['name']) >= 255) {
         $file_name = $_FILES['file']['name'];
         $file_name = str_replace(';', '', $file_name);
         $file_name = str_replace("'", '', $file_name);
