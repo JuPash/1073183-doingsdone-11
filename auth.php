@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
     if (count($errors) == 0) {
         $con = getDBConnection();
-        $user = getUserFromDB($con, $_POST['email']);
+        $user = getUserFromDB($con, filterXSS($_POST['email']));
         if ($user == NULL) {
             $errors['email'] = 'Пользователя с данным email не существует';
         }
