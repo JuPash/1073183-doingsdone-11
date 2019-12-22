@@ -104,9 +104,7 @@ function getUserFromDB($connection, $email) {
     if (!count($users)) {
         return NULL;
     }
-    else {
-        return $users[0];
-    }
+    return $users[0];
 }
 
 /**
