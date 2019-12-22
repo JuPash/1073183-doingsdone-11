@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     if (!isset($_POST['name']) || $_POST['name'] == '') {
         $errors['name'] = 'Укажите имя';
     }
-    if (count($errors) == 0) {
+    if (!count($errors)) {
         $con = getDBConnection();
         createUserInDB($con, $_POST['name'], $_POST['email'], $_POST['password']);
         header("Location: /index.php");

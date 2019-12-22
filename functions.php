@@ -95,7 +95,7 @@ function getUserFromDB($connection, $email) {
         return NULL;
     }
     $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    if (count($users) == 0) {
+    if (!count($users)) {
         return NULL;
     }
     else {

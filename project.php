@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     if (!isset($_POST['name']) || $_POST['name'] == '') {
         $errors['name'] = 'Не указано имя';
     }
-    if (count($errors) == 0) {
+    if (!count($errors)) {
         createProjectInDB($con, $_POST['name'], $uid);
         header("Location: /index.php");
         exit;

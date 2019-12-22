@@ -24,11 +24,11 @@
 
                 <table class="tasks">
                     <?php
-                    if (count($work) == 0) {
+                    if (!count($work)) {
                         print ('<div class="tasks-notasks">Задач не найдено</div>');
                     }
                     foreach ($work as $item): ?>
-                        <?php if ($showCompleteTasks == 0 && $item['status']) {
+                        <?php if (!$showCompleteTasks && $item['status']) {
                             continue;
                         } ?>
 

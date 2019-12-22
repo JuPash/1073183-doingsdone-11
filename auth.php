@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         $errors['password'] = 'Укажите пароль';
     }
 
-    if (count($errors) == 0) {
+    if (!count($errors)) {
         $con = getDBConnection();
         $user = getUserFromDB($con, filterXSS($_POST['email']));
         if ($user == NULL) {

@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         $file_url = '/uploads/' . $file_name;
         move_uploaded_file($_FILES['file']['tmp_name'], $file_path . $file_name);
     }
-    if (count($errors) == 0) {
+    if (!count($errors)) {
         createTaskInDB($con, $_POST['name'], $_POST['date'], $uid, $_POST['project'], $file_url);
         header("Location: /index.php");
         exit;
