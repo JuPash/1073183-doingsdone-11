@@ -1,9 +1,12 @@
 <?php
 require_once './functions.php';
 $title = 'Вход на сайт';
-$errors = [];
 
-if ($_SERVER["REQUEST_METHOD"]=="POST") {
+function auth() {
+    $errors = [];
+    if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        return $errors;
+    }
     if (!isset($_POST['email']) || $_POST['email'] == '') {
         $errors['email'] = 'Укажите email';
     }
@@ -14,27 +17,26 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         $errors['password'] = 'Укажите пароль';
     }
 
-    if (!count($errors)) {
-        $con = getDBConnection();
-        $user = getUserFromDB($con, filterXSS($_POST['email']));
-        if ($user == NULL) {
-            $errors['email'] = 'Пользователя с данным email не существует';
-        }
-        else {
-            $password = sha1($_POST['password']);
-            if ($password != $user['password']) {
-                $errors['password'] = 'Некорректный пароль';
-            }
-            else {
-                session_start();
-                $_SESSION['user_id'] = $user['id'];
-                header("Location: /index.php");
-                exit;
-            }
-        }
+    if (count($errors)) {
+        return $errors;
     }
+    $con = getDBConnection();
+    $user = getUserFromDB($con, filterXSS($_POST['email']));
+    if ($user == NULL) {
+        $errors['email'] = 'Пользователя с данным email не существует';
+        return $errors;
+    }
+    $password = sha1($_POST['password']);
+    if ($password != $user['password']) {
+        $errors['password'] = 'Некорректный пароль';
+        return $errors;
+    }
+    session_start();
+    $_SESSION['user_id'] = $user['id'];
+    header("Location: /index.php");
+    exit;
 }
-
+$errors = auth();
 $content = includeTemplate('auth-form.php', ['errors' => $errors]);
 print includeTemplate('layout.php', ['content' => $content, 'title' => $title]);
 
