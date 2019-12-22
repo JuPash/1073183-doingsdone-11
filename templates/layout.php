@@ -58,7 +58,7 @@
                             ?>
                             " href="?project=<?= $val['id']; ?>"><?= filterXSS($val['name']); ?></a>
                             <span class="main-navigation__list-item-count">
-                            0
+                            <?= categoryTaskCount($val['id'], $tasks) ?>
                             </span>
                         </li>
                     </ul>

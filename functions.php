@@ -83,7 +83,7 @@ function categoryTaskCount($category, $tasks)
 {
     $count = 0;
     foreach ($tasks as $task) {
-        if ($task ['category'] == $category) {
+        if ($task ['project_id'] == $category) {
             $count++;
         }
     }
@@ -237,11 +237,11 @@ function sendEmail($email, $text) {
  */
 function getTasksFromDB($connection, $search, $filter, $project, $uid) {
     if ($search != '') {
-        $sql = "SELECT id, status, name, date_completed, file_path, MATCH(name) AGAINST('$search*' IN BOOLEAN MODE) as score" .
+        $sql = "SELECT id, status, name, date_completed, file_path, project_id MATCH(name) AGAINST('$search*' IN BOOLEAN MODE) as score" .
             "FROM tasks WHERE MATCH(name) AGAINST('$search*' IN BOOLEAN MODE) and user_id=$uid";
     }
     else {
-        $sql = "SELECT id, status, name, date_completed, file_path FROM tasks WHERE user_id=$uid";
+        $sql = "SELECT id, status, name, date_completed, file_path, project_id FROM tasks WHERE user_id=$uid";
     }
 
     if ($project != NULL) {

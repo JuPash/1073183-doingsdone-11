@@ -34,6 +34,6 @@ $tasks = getTasksFromDB($con, $search, $filter, $project, $uid);
 $showCompleteTasks = $_GET['show_completed'] ?? 0;
 $content = includeTemplate('main.php', ['work' => $tasks, 'categories' => $projects, 'showCompleteTasks' => $showCompleteTasks, 'filter' => $filter]);
 print includeTemplate('layout.php', ['categories' => $projects, 'content' => $content, 'title' => $title,
-    'user_info' => $user_info]);
+    'tasks' => $tasks, 'user_info' => $user_info]);
 
 ?>

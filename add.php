@@ -8,6 +8,7 @@ $projects = getProjectsFromDB($con, $uid);
 $user_info = getUserInfoFromDB($con, $uid);
 $errors = [];
 $file_url = '';
+$tasks = getTasksFromDB($con, '', '', NULL, $uid);
 
 if ($_SERVER["REQUEST_METHOD"]=="POST") {
     if (!isset($_POST['name']) || $_POST['name'] == '') {
@@ -42,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 }
 
 $content = includeTemplate('form.php', ['categories' => $projects, 'errors' => $errors]);
-print includeTemplate('layout.php', ['categories' => $projects, 'content' => $content, 'title' => $title,
-    'user_info' => $user_info]);
+print includeTemplate('layout.php', ['categories' => $projects, 'content' => $content, 'title' => $title, 'tasks' => $tasks, 'user_info' => $user_info]);
 
 ?>
