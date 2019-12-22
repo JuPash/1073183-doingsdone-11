@@ -23,7 +23,7 @@
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__data">
                         <p>
-                            <?= $user_info['name'] ?>
+                            <?= filterXSS($user_info['name']) ?>
                         </p>
                         <a href="/logout.php">Выйти</a>
                     </div>
