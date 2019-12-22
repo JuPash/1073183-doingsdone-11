@@ -13,6 +13,9 @@ if (isset($_GET['project'])) {
     //получение параметра из гет запроса + защита от пользовательского ввода
     $project = filter_input(INPUT_GET, 'project', FILTER_SANITIZE_NUMBER_INT);
 }
+else {
+    $project = NULL;
+}
 
 $filter = $_GET['filter'] ?? '';
 $uid = $_SESSION['user_id'];
@@ -24,37 +27,8 @@ $projects = getProjectsFromDB($con, $uid);
 $user_info = getUserInfoFromDB($con, $uid);
 
 $search = trim(filterXSS($_GET['search'] ?? ''));
-if ($search != '') {
-    $sql = "SELECT id, status, name, date_completed, file_path, MATCH(name) AGAINST('$search*' IN BOOLEAN MODE) as score" .
-        "FROM tasks WHERE MATCH(name) AGAINST('$search*' IN BOOLEAN MODE) and user_id=$uid";
-}
-else {
-    $sql = "SELECT id, status, name, date_completed, file_path FROM tasks WHERE user_id=$uid";
-}
 
-if (isset($project)) {
-    //если в GET запросе задан активный проект
-    $sql = $sql . " and project_id=$project";
-}
-if ($filter == 'today') {
-    $sql = $sql . " and date_completed=CURDATE()";
-}
-if ($filter == 'tomorrow') {
-    $sql = $sql . " and date_completed=CURDATE() + INTERVAL 1 DAY";
-}
-if ($filter == 'overdue') {
-    $sql = $sql . " and date_completed<CURDATE()";
-}
-
-//выполняем запрос на подключение задач
-$result = mysqli_query($con, $sql);
-if ($result == false) {
-    print("Ошибка подключения: " . mysqli_error($con));
-    die;
-}
-
-//преобразовываем результат в массив
-$tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$tasks = getTasksFromDB($con, $search, $filter, $project, $uid);
 
 //показывать или нет выполненные задачи
 $showCompleteTasks = $_GET['show_completed'] ?? 0;

@@ -226,4 +226,47 @@ function sendEmail($email, $text) {
 
     $result = $mailer->send($message);
 }
+
+/**
+ * Получение задач из БД
+ * @param string $connection Соединение с БД
+ * @param string $search Поисковой запрос
+ * @param string $filter Фильтр
+ * @param int $project Проект
+ * @param int $uid ID пользователя
+ */
+function getTasksFromDB($connection, $search, $filter, $project, $uid) {
+    if ($search != '') {
+        $sql = "SELECT id, status, name, date_completed, file_path, MATCH(name) AGAINST('$search*' IN BOOLEAN MODE) as score" .
+            "FROM tasks WHERE MATCH(name) AGAINST('$search*' IN BOOLEAN MODE) and user_id=$uid";
+    }
+    else {
+        $sql = "SELECT id, status, name, date_completed, file_path FROM tasks WHERE user_id=$uid";
+    }
+
+    if ($project != NULL) {
+        //если в GET запросе задан активный проект
+        $sql = $sql . " and project_id=$project";
+    }
+    if ($filter == 'today') {
+        $sql = $sql . " and date_completed=CURDATE()";
+    }
+    if ($filter == 'tomorrow') {
+        $sql = $sql . " and date_completed=CURDATE() + INTERVAL 1 DAY";
+    }
+    if ($filter == 'overdue') {
+        $sql = $sql . " and date_completed<CURDATE()";
+    }
+
+    //выполняем запрос на подключение задач
+    $result = mysqli_query($connection, $sql);
+    if ($result == false) {
+        print("Ошибка подключения: " . mysqli_error($connection));
+        die;
+    }
+
+    //преобразовываем результат в массив
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
 ?>
