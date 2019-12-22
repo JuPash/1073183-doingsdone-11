@@ -87,6 +87,12 @@ function categoryTaskCount($category, $tasks)
     return $count;
 }
 
+/**
+ * Получение пользователей из БД по email
+ * @param string $connection Соединение с БД
+ * @param array $email Email
+ * @return int ID пользователя
+ */
 function getUserFromDB($connection, $email) {
     $sql = "SELECT id, password FROM users WHERE email = '$email'";
     $result = mysqli_query($connection, $sql);
@@ -103,7 +109,13 @@ function getUserFromDB($connection, $email) {
     }
 }
 
-//создание пользователя в БД
+/**
+ * Создание пользователей в БД
+ * @param string $connection Соединение с БД
+ * @param string $name Имя пользователя
+ * @param string $email Email
+ * @param string $password Пароль пользователя
+ */
 function createUserInDB($connection, $name, $email, $password) {
     $name = filterXSS($name);
     $password = sha1($password);
@@ -114,7 +126,15 @@ function createUserInDB($connection, $name, $email, $password) {
     }
 }
 
-//создание задач в БД
+/**
+ * Создание задач в БД
+ * @param string $connection Соединение с БД
+ * @param string $name Название задач
+ * @param string $date Дата выполнения задачи
+ * @param int $user ID пользователя
+ * @param int $project ID проекта
+ * @param string $file вложение
+ */
 function createTaskInDB($connection, $name, $date, $user, $project, $file) {
     $name = filterXSS($name);
     $sql = "INSERT INTO tasks (status, name, date_completed, user_id, project_id, file_path) VALUES (0, '$name', '$date', $user, $project, '$file');";
@@ -124,7 +144,12 @@ function createTaskInDB($connection, $name, $date, $user, $project, $file) {
     }
 }
 
-//создание проектов в БД
+/**
+ * Создание проектов в БД
+ * @param string $connection Соединение с БД
+ * @param string $name Название задач
+ * @param int $user ID пользователя
+ */
 function createProjectInDB($connection, $name, $user) {
     $name = filterXSS($name);
     $sql = "INSERT INTO projects (name, user_id) VALUES ('$name', $user);";
@@ -135,7 +160,11 @@ function createProjectInDB($connection, $name, $user) {
 }
 
 
-//получить проекты из базы данных
+/**
+ * Получить проекты из базы данных
+ * @param string $connection Соединение с БД
+ * @param int $user ID пользователя
+ */
 function getProjectsFromDB($connection, $user) {
     $sql = "SELECT id, name FROM projects where user_id=$user";
     $result = mysqli_query($connection, $sql);
@@ -143,7 +172,12 @@ function getProjectsFromDB($connection, $user) {
     return $projects;
 }
 
-//получить имя юзера из БД
+/**
+ * Получить имя юзера из БД
+ * @param string $connection Соединение с БД
+ * @param int $user ID пользователя
+ * @return array данные пользователя
+ */
 function getUserInfoFromDB($connection, $user) {
     $sql = "SELECT email, name FROM users where id=$user";
     $result = mysqli_query($connection, $sql);
@@ -151,7 +185,10 @@ function getUserInfoFromDB($connection, $user) {
     return $user_info;
 }
 
-//подключение к базе данных
+/**
+ * Подключение к базе данных
+ * @return array данные пользователя
+ */
 function getDBConnection() {
     $con = mysqli_connect("localhost", "root", "", "work_okay");
     if ($con == false) {
@@ -162,6 +199,11 @@ function getDBConnection() {
     return $con;
 }
 
+/**
+ * Отправляет почту
+ * @param string $email Email
+ * @param int $text Сообщение
+ */
 function sendEmail($email, $text) {
     $transport = (new Swift_SmtpTransport('phpdemo.ru', 25))
         ->setUsername('keks@phpdemo.ru')
