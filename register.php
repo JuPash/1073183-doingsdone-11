@@ -2,6 +2,11 @@
 require_once './functions.php';
 $title = 'Регистрация аккаунта';
 $errors = [];
+session_start();
+if (isset($_SESSION['user_id'])) {
+    header("Location: /index.php");
+    exit;
+}
 
 if ($_SERVER["REQUEST_METHOD"]=="POST") {
     if (!isset($_POST['email'])) {
@@ -31,6 +36,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     if (!count($errors)) {
         $con = getDBConnection();
         createUserInDB($con, $_POST['name'], $_POST['email'], $_POST['password']);
+        $user = getUserFromDB($con, $_POST['email']);
+        $_SESSION['user_id'] = $user['id'];
         header("Location: /index.php");
         exit;
     }

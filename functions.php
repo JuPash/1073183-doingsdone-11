@@ -97,6 +97,7 @@ function categoryTaskCount($category, $tasks)
  * @return int ID пользователя
  */
 function getUserFromDB($connection, $email) {
+    $email = filterXSS($email);
     $sql = "SELECT id, password FROM users WHERE email = '$email'";
     $result = mysqli_query($connection, $sql);
     if ($result == false) {

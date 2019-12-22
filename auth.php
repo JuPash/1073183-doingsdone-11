@@ -1,7 +1,11 @@
 <?php
 require_once './functions.php';
 $title = 'Вход на сайт';
-
+session_start();
+if (isset($_SESSION['user_id'])) {
+    header("Location: /index.php");
+    exit;
+}
 function auth() {
     $errors = [];
     if ($_SERVER["REQUEST_METHOD"] != "POST") {
@@ -21,7 +25,7 @@ function auth() {
         return $errors;
     }
     $con = getDBConnection();
-    $user = getUserFromDB($con, filterXSS($_POST['email']));
+    $user = getUserFromDB($con, $_POST['email']);
     if ($user == NULL) {
         $errors['email'] = 'Пользователя с данным email не существует';
         return $errors;
@@ -31,7 +35,6 @@ function auth() {
         $errors['password'] = 'Некорректный пароль';
         return $errors;
     }
-    session_start();
     $_SESSION['user_id'] = $user['id'];
     header("Location: /index.php");
     exit;
