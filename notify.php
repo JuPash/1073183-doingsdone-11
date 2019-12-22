@@ -1,5 +1,5 @@
 <?php
-
+require_once './vendor/autoload.php';
 require_once './functions.php';
 $con = getDBConnection();
 $sql = "SELECT user_id, name FROM tasks WHERE TIME(date_completed) < NOW() + INTERVAL 1 HOUR";
